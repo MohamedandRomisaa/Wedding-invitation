@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف</title>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#fbf4ec',
+                            200: '#f5e5d3',
+                            300: '#e6c8a2',
+                            400: '#d8ab72',
+                            500: '#c58d43',
+                            600: '#a36d2e',
+                        },
+                        rosewood: '#5c2c35',
+                        cream: '#faf7f2'
+                    },
+                    fontFamily: {
+                        ruqaa: ['"Aref Ruqaa"', 'serif'],
+                        amiri: ['Amiri', 'serif'],
+                        cairo: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #faf7f2;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .font-calligraphy {
+            font-family: 'Aref Ruqaa', serif;
+        }
+
+        .font-quran {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Hero Background with Soft Gradient Overlay */
+        .hero-bg {
+            background: linear-gradient(rgba(250, 247, 242, 0.85), rgba(250, 247, 242, 0.95)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover no-repeat fixed;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(197, 141, 67, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Floating Hearts Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(197, 141, 67, 0.3);
+            animation: float 15s linear infinite;
+            bottom: -50px;
+            pointer-events: none;
+        }
+
+        /* Custom Audio Player Pulse */
+        .audio-pulse {
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(197, 141, 67, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(197, 141, 67, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 141, 67, 0); }
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Floating Audio Control Button -->
+    <div class="fixed bottom-6 left-6 z-50">
+        <button id="musicToggle" class="w-12 h-12 bg-gold-500 text-white rounded-full flex items-center justify-center shadow-lg audio-pulse hover:bg-gold-600 transition duration-300 focus:outline-none">
+            <i id="musicIcon" class="fas fa-music text-lg"></i>
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Floating Background Particles Container -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <main class="relative z-10 min-h-screen flex flex-col items-center justify-between">
+        
+        <!-- HEADER / HERO SECTION -->
+        <section class="w-full min-h-screen hero-bg flex flex-col items-center justify-center text-center px-4 py-12 relative border-b border-gold-200">
+            
+            <!-- Floral Top Accent -->
+            <div class="mb-6 opacity-80">
+                <svg class="w-32 h-12 text-gold-500 mx-auto" fill="currentColor" viewBox="0 0 100 40">
+                    <path d="M50 0 C60 15, 80 10, 100 20 C80 30, 60 25, 50 40 C40 25, 20 30, 0 20 C20 10, 40 15, 50 0 Z"/>
+                </svg>
+            </div>
+
+            <!-- Basmala / Quranic Verse -->
+            <div class="max-w-2xl mx-auto mb-8">
+                <p class="font-quran text-lg md:text-xl text-gold-600 mb-2">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+                <p class="font-quran text-base md:text-lg text-gray-700 leading-relaxed italic px-4">
+                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                </p>
+            </div>
+
+            <!-- Couple Names -->
+            <div class="my-6">
+                <span class="text-sm uppercase tracking-widest text-gold-600 font-semibold block mb-2">يدعوكم لحضور حفل زفاف</span>
+                <h1 class="font-calligraphy text-5xl md:text-7xl text-gray-800 mb-4 leading-tight">
+                    <span class="inline-block hover:scale-105 transition transform">عريسنا</span>
+                    <span class="text-gold-500 font-sans mx-2 text-3xl md:text-5xl">&</span>
+                    <span class="inline-block hover:scale-105 transition transform">عروسنا</span>
+                </h1>
+            </div>
+
+            <!-- Date Banner -->
+            <div class="inline-block border-y-2 border-gold-300 py-2 px-8 my-4">
+                <p class="text-lg md:text-xl font-bold tracking-wide text-gray-800">
+                    الأحد، 15 نوفمبر 2026
+                </p>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="w-full max-w-xl mt-8">
+                <p class="text-sm text-gray-500 mb-4 font-semibold">متبقي على ليلة العمر</p>
+                <div class="grid grid-cols-4 gap-2 md:gap-4 px-2" id="countdown">
+                    <div class="glass-card p-3 md:p-4 rounded-xl text-center">
+                        <span id="days" class="text-2xl md:text-4xl font-bold text-gold-600 block">00</span>
+                        <span class="text-xs text-gray-500">يوم</span>
+                    </div>
+                    <div class="glass-card p-3 md:p-4 rounded-xl text-center">
+                        <span id="hours" class="text-2xl md:text-4xl font-bold text-gold-600 block">00</span>
+                        <span class="text-xs text-gray-500">ساعة</span>
+                    </div>
+                    <div class="glass-card p-3 md:p-4 rounded-xl text-center">
+                        <span id="minutes" class="text-2xl md:text-4xl font-bold text-gold-600 block">00</span>
+                        <span class="text-xs text-gray-500">دقيقة</span>
+                    </div>
+                    <div class="glass-card p-3 md:p-4 rounded-xl text-center">
+                        <span id="seconds" class="text-2xl md:text-4xl font-bold text-gold-600 block">00</span>
+                        <span class="text-xs text-gray-500">ثانية</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="absolute bottom-6 animate-bounce">
+                <a href="#details" class="text-gold-500 hover:text-gold-600">
+                    <i class="fas font-thin fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+
+        </section>
+
+        <!-- DETAILS SECTION -->
+        <section id="details" class="w-full max-w-4xl px-4 py-16">
+            
+            <div class="text-center mb-12">
+                <h2 class="font-calligraphy text-3xl md:text-4xl text-gray-800 mb-2">تفاصيل الحفل</h2>
+                <div class="w-16 h-1 bg-gold-400 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Time & Date Card -->
+                <div class="glass-card p-8 rounded-2xl text-center flex flex-col items-center justify-center hover:shadow-lg transition duration-300">
+                    <div class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center text-gold-500 mb-4 text-2xl">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">الموعد والتوقيت</h3>
+                    <p class="text-gray-600 mb-1">الأحد، 15 نوفمبر 2026</p>
+                    <p class="text-gray-600 font-semibold text-gold-600">في تمام الساعة 7:00 مساءً</p>
+                    
+                    <a href="https://calendar.google.com" target="_blank" class="mt-6 inline-flex items-center text-xs font-semibold bg-white border border-gold-300 text-gold-600 px-4 py-2 rounded-full hover:bg-gold-500 hover:text-white transition duration-300 shadow-sm">
+                        <i class="far fa-calendar-plus ml-2"></i> إضافة إلى التقويم
+                    </a>
+                </div>
+
+                <!-- Location Card -->
+                <div class="glass-card p-8 rounded-2xl text-center flex flex-col items-center justify-center hover:shadow-lg transition duration-300">
+                    <div class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center text-gold-500 mb-4 text-2xl">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">المكان</h3>
+                    <p class="text-gray-800 font-semibold mb-1">قاعة الأحلام والمناسبات</p>
+                    <p class="text-gray-600 text-sm mb-4">العنوان والتفاصيل الخاصة بالقاعة</p>
+                    
+                    <a href="https://maps.google.com" target="_blank" class="inline-flex items-center text-xs font-semibold bg-gold-500 text-white px-5 py-2.5 rounded-full hover:bg-gold-600 transition duration-300 shadow-md">
+                        <i class="fas fa-directions ml-2"></i> فتح في Google Maps
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RSVP / CONFIRMATION SECTION -->
+        <section class="w-full max-w-xl px-4 py-12 mb-12">
+            <div class="glass-card p-8 rounded-2xl text-center relative overflow-hidden">
+                <div class="text-center mb-6">
+                    <h2 class="font-calligraphy text-3xl text-gray-800 mb-2">تأكيد الحضور</h2>
+                    <p class="text-sm text-gray-500">حضوركم يسعدنا ويُكتمل به فرحنا، يسعدنا تأكيد حضوركم</p>
+                </div>
+
+                <form id="rsvpForm" class="space-y-4">
+                    <div>
+                        <input type="text" required placeholder="الاسم الكريم" class="w-full px-4 py-3 rounded-lg bg-white/80 border border-gold-200 focus:outline-none focus:border-gold-500 text-right">
+                    </div>
+                    <div>
+                        <select class="w-full px-4 py-3 rounded-lg bg-white/80 border border-gold-200 focus:outline-none focus:border-gold-500 text-right text-gray-600">
+                            <option value="1">شخص واحد</option>
+                            <option value="2">شخصين</option>
+                            <option value="3">عائلة (أكثر من شخصين)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-gold-500 text-white py-3 rounded-lg font-bold shadow-md hover:bg-gold-600 transition duration-300">
+                        تأكيد الحضور ✨
+                    </button>
+                </form>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMsg" class="hidden py-8">
+                    <i class="far fa-check-circle text-5xl text-green-500 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800 mb-1">تم تأكيد حضورك بنجاح!</h3>
+                    <p class="text-sm text-gray-600">ننتظركم بشوق لنشاركم أجمل اللحظات.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="w-full py-6 text-center text-xs text-gray-500 border-t border-gold-200 bg-white/50">
+            <p>دامت دياركم عامرة بالأفراح والمسرات 🤍</p>
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Countdown Timer Setup (Set target date: Nov 15, 2026)
+        const weddingDate = new Date('November 15, 2026 19:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 2. Audio Control
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-music');
+            } else {
+                bgMusic.play();
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-pause');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 3. RSVP Form Submission
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.classList.add('hidden');
+            document.getElementById('successMsg').classList.remove('hidden');
+        });
+
+        // 4. Generate Floating Hearts Background
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const heartIcons = ['❤️', '✨', '🌸', '💍'];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'heart-particle text-lg';
+                particle.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = (Math.random() * 8 + 7) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
