@@ -284,25 +284,46 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
+// 2. Audio Control (Autoplay on interaction)
+const musicToggle = document.getElementById('musicToggle');
+const bgMusic = document.getElementById('bgMusic');
+const musicIcon = document.getElementById('musicIcon');
+let isPlaying = false;
 
-        // 2. Audio Control
-        const musicToggle = document.getElementById('musicToggle');
-        const bgMusic = document.getElementById('bgMusic');
-        const musicIcon = document.getElementById('musicIcon');
-        let isPlaying = false;
-
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicIcon.classList.remove('fa-pause');
-                musicIcon.classList.add('fa-music');
-            } else {
-                bgMusic.play();
+function startAudio() {
+    if (!isPlaying && bgMusic) {
+        bgMusic.play().then(() => {
+            isPlaying = true;
+            if (musicIcon) {
                 musicIcon.classList.remove('fa-music');
                 musicIcon.classList.add('fa-pause');
             }
-            isPlaying = !isPlaying;
-        });
+        }).catch(err => console.log("Autoplay blocked:", err));
+    }
+}
+
+// تشغيل الصوت تلقائياً مع أول لمسة أو سكرول في الصفحة
+['click', 'touchstart', 'scroll', 'mousemove'].forEach(event => {
+    document.addEventListener(event, startAudio, { once: true });
+});
+
+// زرار التحكم اليدوي (تشغيل / إيقاف)
+if (musicToggle) {
+    musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isPlaying) {
+            bgMusic.pause();
+            if (musicIcon) {
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-music');
+            }
+            isPlaying = false;
+        } else {
+            startAudio();
+        }
+    });
+}
+        
 
         // 3. RSVP Form Submission
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
