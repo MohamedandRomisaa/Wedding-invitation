@@ -283,14 +283,14 @@
         }
 
         setInterval(updateCountdown, 1000);
-        updateCountdown();
-// 2. Audio Control (Autoplay on interaction)
-const musicToggle = document.getElementById('musicToggle');
+        updateCountdown();}
+        // 2. Audio Control - Simple & Clean Autoplay Fix
 const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
 const musicIcon = document.getElementById('musicIcon');
 let isPlaying = false;
 
-function startAudio() {
+function triggerAudio() {
     if (!isPlaying && bgMusic) {
         bgMusic.play().then(() => {
             isPlaying = true;
@@ -298,22 +298,15 @@ function startAudio() {
                 musicIcon.classList.remove('fa-music');
                 musicIcon.classList.add('fa-pause');
             }
-        }).catch(err => console.log("Autoplay blocked:", err));
+        }).catch(err => console.log("Blocked:", err));
     }
 }
-// تشغيل الصوت تلقائياً مع أول لمسة أو سكرول على الموبايل والكمبيوتر
-const events = ['touchstart', 'pointerdown', 'click', 'scroll'];
 
-function triggerAudio(e) {
-    startAudio();
-    events.forEach(event => {
-        window.removeEventListener(event, triggerAudio, { capture: true });
-    });
-}
+// التشغيل تلقائياً مع أول لمسة أو سكرول على الموبايل واللاب توب
+window.addEventListener('touchstart', triggerAudio, { once: true });
+window.addEventListener('scroll', triggerAudio, { once: true });
+window.addEventListener('click', triggerAudio, { once: true });
 
-events.forEach(event => {
-    window.addEventListener(event, triggerAudio, { once: true, capture: true, passive: true });
-});
 // زرار التحكم اليدوي (تشغيل / إيقاف)
 if (musicToggle) {
     musicToggle.addEventListener('click', (e) => {
@@ -326,11 +319,10 @@ if (musicToggle) {
             }
             isPlaying = false;
         } else {
-            startAudio();
+            triggerAudio();
         }
     });
 }
-        
 
         // 3. RSVP Form Submission
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
