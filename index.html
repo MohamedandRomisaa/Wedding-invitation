@@ -328,6 +328,97 @@
         }
 
         createParticles();
-    </script>
+    </script>  <!-- ================= START COMMENTS SECTION ================= -->
+<section class="w-full max-w-2xl mx-auto my-12 p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-gold-300 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 font-serif">تهاني وتبريكات الحضور ✨</h2>
+    <p class="text-gray-600 text-sm mb-6">شاركونا فرحتنا بكلمة طيّبة أو دعوة من القلب ♥️</p>
+
+    <!-- نموذج إضافة التهنئة -->
+    <form id="weddingCommentForm" class="space-y-4 mb-8 text-right">
+        <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">الاسم الكريم:</label>
+            <input type="text" id="guestName" required placeholder="اكتب اسمك هنا..." 
+                   class="w-full px-4 py-2 text-sm rounded-lg border border-gray-300 focus:outline-none focus:border-gold-500 text-right">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">رسالتك أو تهنئتك:</label>
+            <textarea id="guestMessage" rows="3" required placeholder="اكتب مباركتك للعروسين..." 
+                      class="w-full px-4 py-2 text-sm rounded-lg border border-gray-300 focus:outline-none focus:border-gold-500 text-right"></textarea>
+        </div>
+        <button type="submit" 
+                class="w-full py-2.5 bg-gold-500 hover:bg-gold-600 text-white font-semibold rounded-lg shadow-md transition duration-300">
+            إرسال التهنئة ✨
+        </button>
+    </form>
+
+    <!-- قائمة الكومنتات المكتوبة -->
+    <div id="commentsList" class="space-y-3 text-right max-h-80 overflow-y-auto pr-1">
+        <!-- الرسائل ستظهر هنا تلقائياً -->
+    </div>
+</section>
+
+<!-- Firebase SDK & Comments Logic -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+  // تهيئة قاعدة البيانات المجانية السريعة
+  const firebaseConfig = {
+    databaseURL: "https://wedding-invitation-comments-default-rtdb.firebaseio.com/"
+  };
+  
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.database();
+
+  const commentForm = document.getElementById('weddingCommentForm');
+  const commentsList = document.getElementById('commentsList');
+
+  // 1. قراءة التهاني وعرضها فوراً للجميع
+  db.ref('wedding_comments').on('value', (snapshot) => {
+    commentsList.innerHTML = '';
+    const data = snapshot.val();
+    if (data) {
+      Object.values(data).reverse().forEach(comment => {
+        const item = document.createElement('div');
+        item.className = "p-3 bg-gold-50/60 rounded-xl border border-gold-200/50 shadow-sm";
+        item.innerHTML = `
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-bold text-xs text-gold-700">${escapeHtml(comment.name)}</span>
+            <span class="text-[10px] text-gray-400">${comment.date}</span>
+          </div>
+          <p class="text-xs text-gray-700 leading-relaxed">${escapeHtml(comment.message)}</p>
+        `;
+        commentsList.appendChild(item);
+      });
+    } else {
+      commentsList.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">كن أول من يهنئ العروسين! 🌹</p>';
+    }
+  });
+
+  // 2. حفظ التهنئة الجديدة
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('guestName').value.trim();
+    const message = document.getElementById('guestMessage').value.trim();
+
+    if (name && message) {
+      const newComment = {
+        name: name,
+        message: message,
+        date: new Date().toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' })
+      };
+
+      db.ref('wedding_comments').push(newComment);
+      commentForm.reset();
+    }
+  });
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+</script>
+<!-- ================= END COMMENTS SECTION ================= -->
 </body>
 </html>
