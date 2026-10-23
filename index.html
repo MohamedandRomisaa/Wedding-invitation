@@ -95,61 +95,96 @@
             100% { box-shadow: 0 0 0 0 rgba(197, 141, 67, 0); }
         }
 }
-    /* ==================== شاشة الترحيب بتصميم الظرف الفاخر ==================== */
+  /* ==================== شاشة الظرف الفاخر بالطيات وختم الشمع ==================== */
 #welcomeOverlay {
-    position: fixed;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #2c0b14 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 99999 !important;
+    overflow: hidden;
+    transition: opacity 0.8s ease 0.6s, visibility 0.8s ease 0.6s;
+}
+
+/* الطية العليا للظرف */
+.flap-top {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #4a1525, #2c0b14) !important; /* لون البورجوندي الفاخر */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    height: 50%;
+    background: linear-gradient(180deg, #4a1525, #360e1a);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    z-index: 2;
+    transition: transform 0.8s ease-in-out;
+    transform-origin: top;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* صندوق الظرف وزر التفاعل */
-.envelope-box {
-    text-align: center;
+/* الطية السفلى للظرف */
+.flap-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(0deg, #2c0b14, #360e1a);
+    clip-path: polygon(0 100%, 100% 100%, 50% 0);
+    z-index: 1;
+    transition: transform 0.8s ease-in-out;
+    transform-origin: bottom;
+}
+
+/* حركة فتح طيات الظرف */
+.open-effect .flap-top {
+    transform: rotateX(180deg);
+}
+.open-effect .flap-bottom {
+    transform: rotateX(-180deg);
+}
+
+/* ختم الشمع في النص */
+.seal-wrapper {
+    position: absolute;
+    z-index: 10;
     cursor: pointer;
-    position: relative;
+    text-align: center;
 }
 
-/* ختم الشمع الختامي */
 .heart-btn {
     background: radial-gradient(circle, #8d5b4c, #5c352a) !important;
-    width: 95px;
-    height: 95px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), inset 0 2px 5px rgba(255, 255, 255, 0.3);
     border: 3px solid #b38b6d;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .heart-btn:hover {
     transform: scale(1.08);
-    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
 }
 
 .heart-btn i {
-    color: #e6ca96 !important; /* لون أيقونة الختم الذهبي */
-    font-size: 30px;
-    margin-bottom: 6px;
+    color: #e6ca96 !important;
+    font-size: 28px;
+    margin-bottom: 4px;
 }
 
 .heart-btn span {
     color: #f3e5ab !important;
-    font-size: 12px;
+    font-size: 10px;
     font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-}
+} 
 
 /* وميض الضوء الذهبي الفاخر عند الفتح */
 .light-flash {
@@ -190,12 +225,15 @@ p, span, div {
     </style>
 </head>
 <body class="relative">
-<-- شاشة الترحيب والجواب الافتتاحي --!>
-<div id="welcomeOverlay" class="welcome-overlay">
-    <div class="envelope-box">
-        <div class="heart-btn" id="openInvitation">
+<!-- شاشة الظرف الفاخر بالطيات -->
+<div id="welcomeOverlay">
+    <div class="flap-top"></div>
+    <div class="flap-bottom"></div>
+    <div class="light-flash"></div>
+    <div class="seal-wrapper" id="openInvitation">
+        <div class="heart-btn">
             <i class="fa-solid fa-heart"></i>
-            <span>اضغط هنا لفتح الدعوة</span>
+            <span>اضغط لفتح الدعوة</span>
         </div>
     </div>
 </div>
