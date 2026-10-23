@@ -94,14 +94,15 @@
             70% { box-shadow: 0 0 0 15px rgba(197, 141, 67, 0); }
             100% { box-shadow: 0 0 0 0 rgba(197, 141, 67, 0); }
         }
-        /* شاشة الترحيب والقلب الافتتاحي */
-.welcome-overlay {
+}
+    /* ==================== شاشة الترحيب بتصميم الظرف الفاخر ==================== */
+#welcomeOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    background: linear-gradient(135deg, #4a1525, #2c0b14) !important; /* لون البورجوندي الفاخر */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,60 +110,82 @@
     transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
+/* صندوق الظرف وزر التفاعل */
 .envelope-box {
     text-align: center;
+    cursor: pointer;
+    position: relative;
 }
 
+/* ختم الشمع الختامي */
 .heart-btn {
-    background: #ffffff;
-    padding: 20px 35px;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(233, 30, 99, 0.2);
-    cursor: pointer;
-    display: inline-flex;
+    background: radial-gradient(circle, #8d5b4c, #5c352a) !important;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 12px;
-    animation: pulseHeart 1.5s infinite;
+    margin: 0 auto;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    border: 3px solid #b38b6d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.heart-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
 }
 
 .heart-btn i {
-    font-size: 40px;
-    color: #e91e63;
+    color: #e6ca96 !important; /* لون أيقونة الختم الذهبي */
+    font-size: 30px;
+    margin-bottom: 6px;
 }
 
 .heart-btn span {
+    color: #f3e5ab !important;
+    font-size: 12px;
     font-family: 'Cairo', sans-serif;
-    font-size: 16px;
-    color: #880e4f;
     font-weight: bold;
 }
 
-@keyframes pulseHeart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
+/* وميض الضوء الذهبي الفاخر عند الفتح */
+.light-flash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 120px 100px #ffeb3b, 0 0 300px 200px #ffc107;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
 }
 
-.fade-out {
-    opacity: 0;
-    visibility: hidden;
-}
-        /* خلفية الدعوة بنفس لون وتدرج شاشة الجواب */
+.open-effect .light-flash {
+    transform: translate(-50%, -50%) scale(60);
+    opacity: 1;
+}    
+    /* خلفية الدعوة من جوه لون بيج ذهبي هادئ وراقي يليق مع الظرف البورجوندي */
 body {
-    background: linear-gradient(135deg, #fce4ec, #f8bbd0) !important;
+    background: linear-gradient(135deg, #fcf6f0, #f5ebd9) !important;
     background-attachment: fixed !important;
 }
 
-/* الكلام والعناوين بنفس لون القلب الوردي/الفوشيا */
+/* العناوين والأسماء بلون ذهبي دافئ وفخم */
 h1, h2, h3, h4, h5, h6, 
 .wedding-title, .section-title, .title {
-    color: #e91e63 !important; /* نفس درجة لون القلب بالضبط */
+    color: #8c6d46 !important; 
 }
 
-/* النص الفرعي والكلام العادي بلون غامق متناسق وواضح */
+/* الكلام والنصوص العادية بلون بورجوندي دافئ ومتناسق */
 p, span, div {
-    color: #880e4f; /* درجة بينك غامقة وراقية جداً للقراءة */
+    color: #4a1525; 
 }
     </style>
 </head>
@@ -542,6 +565,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (openBtn && overlay) {
         openBtn.addEventListener('click', function() {
+            // تفعيل وميض الضوء الذهبي الفاخر
+            if (overlay) {
+                overlay.classList.add('open-effect');
+            }
             // محاولة تشغيل الموسيقى
             if (music) {
                 music.play().then(() => {
