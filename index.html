@@ -263,28 +263,32 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // 1. Countdown Timer Setup (Set target date: Nov 15, 2026)
-        const weddingDate = new Date('November 15, 2026 19:00:00').getTime();
-
         function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = weddingDate - now;
+    const weddingDate = new Date('November 15, 2026 00:00:00').getTime();
+    const now = new Date().getTime();
+    const difference = weddingDate - now;
 
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
-            }
-        }
+        const dElem = document.getElementById('days');
+        const hElem = document.getElementById('hours');
+        const mElem = document.getElementById('minutes');
+        const sElem = document.getElementById('seconds');
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();}
-// 2. Audio Control - Universal Autoplay Trigger (Mobile & Laptop)
+        if(dElem) dElem.innerText = days < 10 ? '0' + days : days;
+        if(hElem) hElem.innerText = hours < 10 ? '0' + hours : hours;
+        if(mElem) mElem.innerText = minutes < 10 ? '0' + minutes : minutes;
+        if(sElem) sElem.innerText = seconds < 10 ? '0' + seconds : seconds;
+    }
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+      // 2.  Audio Control - Universal Autoplay Trigger (Mobile & Laptop)
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
 const musicIcon = document.getElementById('musicIcon');
@@ -298,7 +302,6 @@ function playAudio() {
                 musicIcon.classList.remove('fa-music');
                 musicIcon.classList.add('fa-pause');
             }
-            // بعد ما تنجح في التشغيل نلغي الاستماع للأحداث
             removeAllListeners();
         }).catch(err => {
             console.log("Autoplay waiting for interaction:", err);
@@ -306,7 +309,6 @@ function playAudio() {
     }
 }
 
-// أحداث التفاعل السريعة للاب والموبايل
 const events = ['touchstart', 'touchend', 'scroll', 'click', 'pointerdown'];
 
 function removeAllListeners() {
@@ -316,13 +318,11 @@ function removeAllListeners() {
     });
 }
 
-// إضافة المستمعين للجهاز بالكامل (Window & Document) لضمان اللقط الفوري
 events.forEach(evt => {
     window.addEventListener(evt, playAudio, { capture: true, passive: true });
     document.addEventListener(evt, playAudio, { capture: true, passive: true });
 });
 
-// زرار التحكم اليدوي (تشغيل / إيقاف)
 if (musicToggle) {
     musicToggle.addEventListener('click', (e) => {
         e.stopPropagation();
