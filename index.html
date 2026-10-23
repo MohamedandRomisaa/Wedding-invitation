@@ -148,10 +148,26 @@
     opacity: 0;
     visibility: hidden;
 }
+        /* خلفية الدعوة بنفس لون وتدرج شاشة الجواب */
+body {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0) !important;
+    background-attachment: fixed !important;
+}
+
+/* الكلام والعناوين بنفس لون القلب الوردي/الفوشيا */
+h1, h2, h3, h4, h5, h6, 
+.wedding-title, .section-title, .title {
+    color: #e91e63 !important; /* نفس درجة لون القلب بالضبط */
+}
+
+/* النص الفرعي والكلام العادي بلون غامق متناسق وواضح */
+p, span, div {
+    color: #880e4f; /* درجة بينك غامقة وراقية جداً للقراءة */
+}
     </style>
 </head>
 <body class="relative">
-<!-- شاشة الترحيب والجواب الافتتاحي -->
+<-- شاشة الترحيب والجواب الافتتاحي --!>
 <div id="welcomeOverlay" class="welcome-overlay">
     <div class="envelope-box">
         <div class="heart-btn" id="openInvitation">
@@ -517,36 +533,38 @@ if (musicToggle) {
   }
 </script>
 <!-- ================= END COMMENTS SECTION ================= -->
-    <script>
-// فتح الدعوة وتشغيل الصوت مع الضغطة الأولى على القلب
-const openInvitationBtn = document.getElementById('openInvitation');
-const welcomeOverlay = document.getElementById('welcomeOverlay');
-const bgMusic = document.getElementById('bgMusic');
-const musicIcon = document.getElementById('musicIcon');
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const openBtn = document.getElementById('openInvitation');
+    const overlay = document.getElementById('welcomeOverlay');
+    const music = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
 
-if (openInvitationBtn) {
-    openInvitationBtn.addEventListener('click', () => {
-        // تشغيل الموسيقى فوراً
-        if (bgMusic) {
-            bgMusic.play().then(() => {
-                if (musicIcon) {
-                    musicIcon.classList.remove('fa-music');
-                    musicIcon.classList.add('fa-pause');
-                }
-            }).catch(err => {
-                console.log("Audio play error:", err);
-            });
-        }
+    if (openBtn && overlay) {
+        openBtn.addEventListener('click', function() {
+            // محاولة تشغيل الموسيقى
+            if (music) {
+                music.play().then(() => {
+                    if (icon) {
+                        icon.classList.remove('fa-music');
+                        icon.classList.add('fa-pause');
+                    }
+                }).catch(err => {
+                    console.log("Audio play prevented:", err);
+                });
+            }
 
-        // إخفاء شاشة الترحيب بسلاسة
-        if (welcomeOverlay) {
-            welcomeOverlay.classList.add('fade-out');
+            // إخفاء شاشة الترحيب فوراً وبسلاسة
+            overlay.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
+            overlay.style.opacity = "0";
+            overlay.style.visibility = "hidden";
+            
             setTimeout(() => {
-                welcomeOverlay.style.display = 'none';
-            }, 800);
-        }
-    });
-}
-</script>
+                overlay.style.display = "none";
+            }, 500);
+        });
+    }
+});
+</script>  
 </body>
 </html>
