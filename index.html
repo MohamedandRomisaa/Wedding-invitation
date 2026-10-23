@@ -96,65 +96,6 @@
         }
 }
  
-/*بالكامل شاشة الترحيب والقلب الافتتاحي ملء الشاشة*/
-#welcomeOverlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: #f7e8e8 !important; /* لون الخلفية الناعم اللي بيغطي الصفحة */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    z-index: 999999 !important; /* ضمان إنه يكون فوق كل العناصر */
-    overflow: hidden;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-/* الكارت الأبيض الداخلي */
-#openInvitation {
-    background: #ffffff !important;
-    padding: 30px 50px !important;
-    border-radius: 50px !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-#openInvitation:hover {
-    transform: scale(1.05);
-}
-.envelope-box {
-    text-align: center;
-}
-
-.heart-btn {
-    background: #ffffff;
-    padding: 20px 35px;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(233, 30, 99, 0.2);
-    cursor: pointer;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    animation: pulseHeart 1.5s infinite;
-}
-
-.heart-btn i {
-    font-size: 40px;
-    color: #e91e63;
-}
-
-.heart-btn span {
-    font-family: 'Cairo', sans-serif;
-    font-size: 16px;
-    color: #880e4f;
-    font-weight: bold;
-}
 
 @keyframes pulseHeart {
     0% { transform: scale(1); }
@@ -192,10 +133,10 @@ body {
     background-attachment: fixed !important;
 }
 
-/*الكلام والعناوين بنفس لون القلب الوردي/ */
+/* الكلام و العناوين باللون الذهبي اللامع  / */
 h1, h2, h3, h4, h5, h6, 
 .wedding-title, .section-title, .title {
-    color: #e91e63 !important; /* نفس درجة لون القلب بالضبط */
+    color: #e91e63 !important; /* نفس درجة لون الكلام  بالضبط */
 }
 
 /* النص الفرعي والكلام العادي بلون غامق متناسق وواضح */
@@ -205,15 +146,7 @@ p, span, div {
     </style>
 </head>
 <body class="relative">
-<!-- شاشة الترحيب والجواب الافتتاحي يغطي الشاشة بالكامل -->
-<div id="welcomeOverlay" class="welcome-overlay">
-    <div class="envelope-box">
-        <div class="heart-btn" id="openInvitation">
-            <i class="fa-solid fa-heart"></i>
-            <span>اضغط هنا لفتح الدعوة</span>
-        </div>
-    </div>
-</div>
+
     <!-- Floating Audio Control Button -->
     <div class="fixed bottom-6 left-6 z-50">
         <button id="musicToggle" class="w-12 h-12 bg-gold-500 text-white rounded-full flex items-center justify-center shadow-lg audio-pulse hover:bg-gold-600 transition duration-300 focus:outline-none">
