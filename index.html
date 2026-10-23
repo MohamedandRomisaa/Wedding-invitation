@@ -288,7 +288,7 @@
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-      // 2.  Audio Control - Universal Autoplay Trigger (Mobile & Laptop)
+      // 2. // Audio Control - Mobile & Laptop (Touch, Click & Scroll Trigger)
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
 const musicIcon = document.getElementById('musicIcon');
@@ -309,6 +309,7 @@ function playAudio() {
     }
 }
 
+// دمج السكرول واللمس والكليك لتغطية كل الطرق
 const events = ['touchstart', 'touchend', 'scroll', 'click', 'pointerdown'];
 
 function removeAllListeners() {
@@ -337,7 +338,7 @@ if (musicToggle) {
             playAudio();
         }
     });
-}
+} 
         // 3. RSVP Form Submission
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
