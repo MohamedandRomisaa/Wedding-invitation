@@ -303,8 +303,8 @@ function startAudio() {
 }
 
 // تشغيل الصوت تلقائياً مع أول لمسة أو سكرول في الصفحة
-['click', 'touchstart', 'scroll', 'mousemove'].forEach(event => {
-    document.addEventListener(event, startAudio, { once: true });
+['click', 'touchstart', 'scroll', 'pointerdown'].forEach(event => {
+    window.addEventListener(event, startAudio, { once: true, passive: true });
 });
 
 // زرار التحكم اليدوي (تشغيل / إيقاف)
