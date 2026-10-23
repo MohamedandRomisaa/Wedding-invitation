@@ -301,12 +301,19 @@ function startAudio() {
         }).catch(err => console.log("Autoplay blocked:", err));
     }
 }
+// تشغيل الصوت تلقائياً مع أول لمسة أو سكرول على الموبايل والكمبيوتر
+const events = ['touchstart', 'pointerdown', 'click', 'scroll'];
 
-// تشغيل الصوت تلقائياً مع أول لمسة أو سكرول في الصفحة
-['click', 'touchstart', 'scroll', 'pointerdown'].forEach(event => {
-    window.addEventListener(event, startAudio, { once: true, passive: true });
+function triggerAudio(e) {
+    startAudio();
+    events.forEach(event => {
+        window.removeEventListener(event, triggerAudio, { capture: true });
+    });
+}
+
+events.forEach(event => {
+    window.addEventListener(event, triggerAudio, { once: true, capture: true, passive: true });
 });
-
 // زرار التحكم اليدوي (تشغيل / إيقاف)
 if (musicToggle) {
     musicToggle.addEventListener('click', (e) => {
