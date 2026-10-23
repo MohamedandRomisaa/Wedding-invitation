@@ -209,7 +209,7 @@
                     <div class="w-16 h-16 bg-gold-100 rounded-full flex items-center justify-center text-gold-500 mb-4 text-2xl">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">المكان</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">المنصورة</h3>
                     <p class="text-gray-800 font-semibold mb-1">G MARIOTT hall</p>
             
                     <a href="https://maps.app.goo.gl/LEPtnPcsfgzC7kh48" target="_blank" class="inline-flex items-center text-xs font-semibold bg-gold-500 text-white px-5 py-2.5 rounded-full hover:bg-gold-600 transition duration-300 shadow-md">
@@ -284,13 +284,13 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();}
-        // 2. Audio Control - Simple & Clean Autoplay Fix
+// 2. Audio Control - Universal Autoplay Trigger (Mobile & Laptop)
 const bgMusic = document.getElementById('bgMusic');
 const musicToggle = document.getElementById('musicToggle');
 const musicIcon = document.getElementById('musicIcon');
 let isPlaying = false;
 
-function triggerAudio() {
+function playAudio() {
     if (!isPlaying && bgMusic) {
         bgMusic.play().then(() => {
             isPlaying = true;
@@ -298,14 +298,29 @@ function triggerAudio() {
                 musicIcon.classList.remove('fa-music');
                 musicIcon.classList.add('fa-pause');
             }
-        }).catch(err => console.log("Blocked:", err));
+            // بعد ما تنجح في التشغيل نلغي الاستماع للأحداث
+            removeAllListeners();
+        }).catch(err => {
+            console.log("Autoplay waiting for interaction:", err);
+        });
     }
 }
 
-// التشغيل تلقائياً مع أول لمسة أو سكرول على الموبايل واللاب توب
-window.addEventListener('touchstart', triggerAudio, { once: true });
-window.addEventListener('scroll', triggerAudio, { once: true });
-window.addEventListener('click', triggerAudio, { once: true });
+// أحداث التفاعل السريعة للاب والموبايل
+const events = ['touchstart', 'touchend', 'scroll', 'click', 'pointerdown'];
+
+function removeAllListeners() {
+    events.forEach(evt => {
+        window.removeEventListener(evt, playAudio, { capture: true });
+        document.removeEventListener(evt, playAudio, { capture: true });
+    });
+}
+
+// إضافة المستمعين للجهاز بالكامل (Window & Document) لضمان اللقط الفوري
+events.forEach(evt => {
+    window.addEventListener(evt, playAudio, { capture: true, passive: true });
+    document.addEventListener(evt, playAudio, { capture: true, passive: true });
+});
 
 // زرار التحكم اليدوي (تشغيل / إيقاف)
 if (musicToggle) {
@@ -319,11 +334,10 @@ if (musicToggle) {
             }
             isPlaying = false;
         } else {
-            triggerAudio();
+            playAudio();
         }
     });
 }
-
         // 3. RSVP Form Submission
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
